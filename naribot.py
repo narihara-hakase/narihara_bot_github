@@ -103,4 +103,4 @@ async def on_message(message):
         send_ms = 'D20ころころ...' + 'あなたのPLお題は' + '[' + odai + ']' + 'に決定しました！'
         await client.send_message(message.channel, send_ms)
 
-client.run("NDc4NTc2NTMyNzA5ODM0NzUz.Dt2LIw._JmgqmNjLXR8XIbX_OoGxWS1XPA")
+client.run("vHunPitOk2WtV-CVlZDkE623uEJx7EwR")
