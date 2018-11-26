@@ -48,11 +48,11 @@ async def on_reaction_remove(reaction, user):
 
 @client.event
 async def on_message(message):
-    dice_com = message.content
-    dice = []
+    com = message.content
 
-    if re.match('\$\d+d\d+', dice_com):
-        str_list = re.findall('\d+',dice_com)
+    if re.match('\$\d+d\d+', com):
+        dice = []
+        str_list = re.findall('\d+',com)
         for s in range(0,int(str_list[0])):
             dice.append(random.randint(1,int(str_list[1])))
 
@@ -63,43 +63,41 @@ async def on_message(message):
         send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total
         await client.send_message(message.channel, send_ms)
 
-@client.event
-async def on_message(message):
-    com = message.content
-    gmt = ['最高のプレゼントをあなたへ…','冷めた手料理','真っ赤な…','人里離れた山荘、開かない玄関、何も起きないはずがなく…','青春は○○の味である','気づいて、お願い、気づかないで']
-
-
     if re.match('\$[Gg][Mm][Ww]', com):
+        gmt = ['最高のプレゼントをあなたへ…',
+        '冷めた手料理',
+        '真っ赤な…',
+        '人里離れた山荘、開かない玄関、何も起きないはずがなく…',
+        '青春は○○の味である',
+        '気づいて、お願い、気づかないで']
+
         odai = gmt[random.randint(0,5)]
 
         send_ms = 'D6ころころ...' + 'あなたのGMお題は' + '[' + odai + ']' + 'に決定しました！'
         await client.send_message(message.channel, send_ms)
 
-@client.event
-async def on_message(message):
-    com = message.content
-    plt = ['ああなんて可愛そうなお方、私が救ってみせましょう！',
-'あなたに私の全てを捧げますっ！',
-'熱血派の高身長美形',
-'終焉の闇へと誘う、この背に在る白銀の翼...',
-'THE 主人公',
-'オ～！ワタシニホンゴ、ワカリマセ～ン',
-'自分大好き人間',
-'酒に任せて適当なこと言う奴',
-'オーバーリアクション',
-'不幸体質',
-'〇〇以外何も見えない',
-'ゴリラ',
-'SAN値が無くなる1歩前',
-'うわぁ腹の底まで真っ黒だ',
-'あなたを守ります、ありとあらゆる困難から',
-'女子力（物理）',
-'人間以外にモテる',
-'三度の飯より〇〇が好き！',
-'○○を守るのは俺の仕事',
-'二度とあんな目に合いたくない',]
+    if re.match('\$[Pp][Ll][Ww]', com):
+        plt = ['ああなんて可愛そうなお方、私が救ってみせましょう！',
+        'あなたに私の全てを捧げますっ！',
+        '熱血派の高身長美形',
+        '終焉の闇へと誘う、この背に在る白銀の翼...',
+        'THE 主人公',
+        'オ～！ワタシニホンゴ、ワカリマセ～ン',
+        '自分大好き人間',
+        '酒に任せて適当なこと言う奴',
+        'オーバーリアクション',
+        '不幸体質',
+        '〇〇以外何も見えない',
+        'ゴリラ',
+        'SAN値が無くなる1歩前',
+        'うわぁ腹の底まで真っ黒だ',
+        'あなたを守ります、ありとあらゆる困難から',
+        '女子力（物理）',
+        '人間以外にモテる',
+        '三度の飯より〇〇が好き！',
+        '○○を守るのは俺の仕事',
+        '二度とあんな目に合いたくない',]
 
-    if re.match('\$[Gg][Mm][Ww]', com):
         odai = plt[random.randint(0,19)]
 
         send_ms = 'D20ころころ...' + 'あなたのPLお題は' + '[' + odai + ']' + 'に決定しました！'
