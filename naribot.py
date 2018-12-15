@@ -41,12 +41,13 @@ async def on_reaction_remove(reaction, user):
 async def on_message(message):
     com = message.content
 
-    if com.channel.id == '413611312464134144':
+    if message.channel.id == '413611312464134144': #test is 523395238484508672 main is 413611312464134144
         if re.match('test', com):
             client.pin_message(message)
             pin_ms = await client.pins_from(client.get_channel('413611312464134144'))
             send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
             await client.send_message(discord.Object(id='263246089115664384'), send_ms)
+            #test is 466672489376776204 main is 263246089115664384
 
 
     if re.match('\$\d+d\d+', com):
@@ -102,4 +103,5 @@ async def on_message(message):
         send_ms = 'D20ころころ...' + 'あなたのPLお題は' + '[' + odai + ']' + 'に決定しました！'
         await client.send_message(message.channel, send_ms)
 
+#client.run("NDc4NTc2NTMyNzA5ODM0NzUz.DvY5iw.JpGGr9EunFqKx78TGymc7oHJOIA") #for test bot
 client.run("NDY2NjcxMTczMjIwOTU4MjE4.Dt2KYA.EaQOTqbdWLQ01CMIhkVtQkfCSRg")
