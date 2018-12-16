@@ -42,7 +42,7 @@ async def on_message(message):
     com = message.content
 
     if message.channel.id == '413611312464134144': #test is 523395238484508672 main is 413611312464134144
-        if re.match('@everyone', com):
+        if re.search('everyone', com):
             client.pin_message(message)
             pin_ms = await client.pins_from(client.get_channel('413611312464134144'))
             send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
