@@ -2,6 +2,10 @@ import discord
 
 import re
 import random
+ch_agenda= '413611312464134144'
+ch_general= '263246089115664384'
+ch_test= '523395238484508672'
+
 client = discord.Client()
 
 @client.event
@@ -13,7 +17,7 @@ async def on_ready():
 
 @client.event
 async def on_reaction_add(reaction, user):
-    if reaction.message.channel.id == '413611312464134144':
+    if reaction.message.channel.id == ch_agenda:
         mes = reaction.message.content
         str_list = re.findall('[０-９\d]+月[０-９\d]+日|[０-９\d]+[\/][０-９\d]+',mes)
 
@@ -26,7 +30,7 @@ async def on_reaction_add(reaction, user):
 
 @client.event
 async def on_reaction_remove(reaction, user):
-    if reaction.message.channel.id == '413611312464134144':
+    if reaction.message.channel.id == ch_agenda:
         mes = reaction.message.content
         str_list = re.findall('[０-９\d]+月[０-９\d]+日|[０-９\d]+[\/][０-９\d]+',mes)
 
@@ -41,13 +45,13 @@ async def on_reaction_remove(reaction, user):
 async def on_message(message):
     com = message.content
 
-    if message.channel.id == '413611312464134144': #test is 523395238484508672 main is 413611312464134144
+    if message.channel.id == ch_agenda:
         if re.search('everyone', com):
             client.pin_message(message)
-            pin_ms = await client.pins_from(client.get_channel('413611312464134144'))
+            pin_ms = await client.pins_from(client.get_channel(ch_agenda))
             send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
-            await client.send_message(discord.Object(id='263246089115664384'), send_ms)
-            #test is 466672489376776204 main is 263246089115664384
+            await client.send_message(discord.Object(id = ch_general, send_ms)
+
 
 
     if re.match('\$\d+d\d+', com):
