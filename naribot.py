@@ -50,7 +50,7 @@ async def on_message(message):
             await client.pin_message(message)
             pin_ms = await client.pins_from(client.get_channel(ch_agenda))
             send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
-            await client.send_message(discord.Object(id = ch_general, send_ms)
+            await client.send_message(discord.Object(id = ch_general), send_ms)
 
     if re.match('\$\d+d\d+', com):
         dice = []
