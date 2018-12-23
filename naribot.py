@@ -16,6 +16,15 @@ async def on_ready():
     print('------')
 
 @client.event
+async def on_message_edit(before, after):
+    if before.pinned != after.pinned:
+        pin_ms = await client.pins_from(client.get_channel(ch_agenda))
+
+        send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
+
+        await client.send_message(discord.Object(id=ch_general), send_ms)
+
+@client.event
 async def on_reaction_add(reaction, user):
     if reaction.message.channel.id == ch_agenda:
         mes = reaction.message.content
@@ -45,12 +54,14 @@ async def on_reaction_remove(reaction, user):
 async def on_message(message):
     com = message.content
 
+''' 一時的にオミット中。
     if message.channel.id == ch_agenda:
         if re.search('everyone', com):
             await client.pin_message(message)
             pin_ms = await client.pins_from(client.get_channel(ch_agenda))
             send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
             await client.send_message(discord.Object(id = ch_general), send_ms)
+'''
 
     if re.match('\$\d+d\d+', com):
         dice = []
