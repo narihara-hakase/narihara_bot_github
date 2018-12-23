@@ -1,3 +1,4 @@
+#ちゃんと上がる？
 import discord
 
 import re
