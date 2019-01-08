@@ -65,7 +65,7 @@ async def on_message(message):
         dice = []
         str_list = re.findall('\d+',com)
         for s in range(0,int(str_list[0])):
-            dice.append(random.randint(1,int(str_list[1]))).sort
+            dice.append(random.randint(1,int(str_list[1]))).sort()
 
         dice_num = map(str, dice)
         dice_num = ','.join(dice_num)
