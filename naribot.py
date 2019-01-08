@@ -61,7 +61,7 @@ async def on_message(message):
                 await client.send_message(discord.Object(id = ch_general), send_ms)
     '''
     if re.match('\$help', com):
-        help_ms = '''$help ヘルプを表示
+        help_ms = '''
         $[整数]d[整数] ダイスコードに従いダイスをふる
         $s[整数]d[整数] ダイスを降った後整列させ、期待値を表示する。
         '''
