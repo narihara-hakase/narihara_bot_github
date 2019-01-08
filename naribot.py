@@ -60,8 +60,29 @@ async def on_message(message):
                 send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
                 await client.send_message(discord.Object(id = ch_general), send_ms)
     '''
+    if re.match('\$help', com):
+        help_ms = '''$help ヘルプを表示
+        $[整数]d[整数] ダイスコードに従いダイスをふる
+        $s[整数]d[整数] ダイスを降った後整列させ、期待値を表示する。
+        '''
+        await client.send_message(message.channel, help_ms)
 
     if re.match('\$\d+d\d+', com):
+        dice = []
+        dice_cmd_list = re.findall('\d+',com)
+        dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
+
+        for s in range(0,dice_cmd_list[0]):
+            dice.append(random.randint(1,dice_cmd_list[1]))
+
+        dice_num = map(str, dice)
+        dice_num = ','.join(dice_num)
+        dice_total = str(sum(dice))
+
+        send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total
+        await client.send_message(message.channel, send_ms)
+
+    if re.match('\$[sS]\d+d\d+', com):
         dice = []
         dice_cmd_list = re.findall('\d+',com)
         dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
