@@ -68,7 +68,7 @@ async def on_message(message):
             dice.append(random.randint(1,int(str_list[1])))
         dice.sort()
 
-        dice_mean = ((str_list[1]+1))/2 *str_list[0]
+        dice_mean =str(((str_list[1]+1))/2 *str_list[0])
 
         dice_num = map(str, dice)
         dice_num = ','.join(dice_num)
