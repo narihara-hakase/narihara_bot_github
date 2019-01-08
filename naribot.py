@@ -101,4 +101,4 @@ async def on_message(message):
         await client.send_message(message.channel, send_ms)
 
 #client.run("NDc4NTc2NTMyNzA5ODM0NzUz.DvY5iw.JpGGr9EunFqKx78TGymc7oHJOIA") #for test bot
-client.run("NDY2NjcxMTczMjIwOTU4MjE4.DvjS9g.8d5XGm7wF36AJ6MyYtWuJu3G7SA")
+client.run("NDY2NjcxMTczMjIwOTU4MjE4.DxZ7Pg.r22zfpPlCjAzM5GaBarvrZjgz2w")
