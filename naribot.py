@@ -76,8 +76,8 @@ async def on_message(message):
         dice_num = ','.join(dice_num)
         dice_total = str(sum(dice))
 
-'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total + ' 期待値:' + dice_mean
-
+        send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total + ' 期待値:' + dice_mean
+        await client.send_message(message.channel, send_ms)
 
 #client.run("NDc4NTc2NTMyNzA5ODM0NzUz.DvY5iw.JpGGr9EunFqKx78TGymc7oHJOIA") #for test bot
 client.run("NDY2NjcxMTczMjIwOTU4MjE4.DvjS9g.8d5XGm7wF36AJ6MyYtWuJu3G7SA")
