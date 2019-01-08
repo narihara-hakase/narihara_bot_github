@@ -63,19 +63,21 @@ async def on_message(message):
 
     if re.match('\$\d+d\d+', com):
         dice = []
-        str_list = re.findall('\d+',com)
-        for s in range(0,int(str_list[0])):
-            dice.append(random.randint(1,int(str_list[1])))
+        dice_cmd_list = re.findall('\d+',com)
+        dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
+
+        for s in range(0,dice_cmd_list[0]):
+            dice.append(random.randint(1,dice_cmd_list[1]))
         dice.sort()
 
-        dice_mean =str(((str_list[1]+1))/2 *str_list[0])
+        dice_mean = str(((dice_cmd_list[1]+1))/2 *dice_cmd_list[0])
 
         dice_num = map(str, dice)
         dice_num = ','.join(dice_num)
         dice_total = str(sum(dice))
 
-        send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total + ' 期待値:' + dice_mean
-        await client.send_message(message.channel, send_ms)
+'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total + ' 期待値:' + dice_mean
+
 
 #client.run("NDc4NTc2NTMyNzA5ODM0NzUz.DvY5iw.JpGGr9EunFqKx78TGymc7oHJOIA") #for test bot
 client.run("NDY2NjcxMTczMjIwOTU4MjE4.DvjS9g.8d5XGm7wF36AJ6MyYtWuJu3G7SA")
