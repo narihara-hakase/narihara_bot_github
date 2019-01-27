@@ -58,9 +58,9 @@ class Swstat:
                 stat_data.append(stat_tmpary) #ここで2次元配列にして結果保存
 
             #データ文字列生成
-            header = '種族：' + self.__RACE_STAT[race_num][0] + '\r\n'
+            header = '種族：' + self.__RACE_STAT[race_num][0][0] + '\r\n'
 
-            stat_str=[]
+            stat_str=''
             for i in range(3):
                 for cnt,label in enumerate( self.__STAT_LABEL ):
                     stat_str += label + str(stat_data[i][cnt]) + ','
