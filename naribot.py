@@ -2,103 +2,115 @@ import discord
 
 import re
 import random
+import class.py
+
 ch_agenda= '413611312464134144'
 ch_general= '263246089115664384'
 ch_test= '523395238484508672'
 
-client = discord.Client()
+if __name__ == '__main__':
 
-@client.event
-async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
+    swstat = Swstat()
+    client = discord.Client()
 
-@client.event
-async def on_message_edit(before, after):
-    if before.pinned != after.pinned:
-        pin_ms = await client.pins_from(client.get_channel(ch_agenda))
-        send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
-        await client.send_message(discord.Object(id=ch_general), send_ms)
+    @client.event
+    async def on_ready():
+        print('Logged in as')
+        print(client.user.name)
+        print(client.user.id)
+        print('------')
 
-@client.event
-async def on_reaction_add(reaction, user):
-    if reaction.message.channel.id == ch_agenda:
-        mes = reaction.message.content
-        str_list = re.findall('[０-９\d]+月[０-９\d]+日|[０-９\d]+[\/][０-９\d]+',mes)
+    @client.event
+    async def on_message_edit(before, after):
+        if before.pinned != after.pinned:
+            pin_ms = await client.pins_from(client.get_channel(ch_agenda))
+            send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
+            await client.send_message(discord.Object(id=ch_general), send_ms)
 
-        if str_list == []:
-            send_ms = '開催日時不明'
-        else:
-            send_ms = str_list[0]
+    @client.event
+    async def on_reaction_add(reaction, user):
+        if reaction.message.channel.id == ch_agenda:
+            mes = reaction.message.content
+            str_list = re.findall('[０-９\d]+月[０-９\d]+日|[０-９\d]+[\/][０-９\d]+',mes)
 
-        await client.send_message(user , send_ms+"のセッションに参加申し込みしました")
+            if str_list == []:
+                send_ms = '開催日時不明'
+            else:
+                send_ms = str_list[0]
 
-@client.event
-async def on_reaction_remove(reaction, user):
-    if reaction.message.channel.id == ch_agenda:
-        mes = reaction.message.content
-        str_list = re.findall('[０-９\d]+月[０-９\d]+日|[０-９\d]+[\/][０-９\d]+',mes)
+            await client.send_message(user , send_ms+"のセッションに参加申し込みしました")
 
-        if str_list == []:
-            send_ms = '開催日時不明'
-        else:
-            send_ms = str_list[0]
+    @client.event
+    async def on_reaction_remove(reaction, user):
+        if reaction.message.channel.id == ch_agenda:
+            mes = reaction.message.content
+            str_list = re.findall('[０-９\d]+月[０-９\d]+日|[０-９\d]+[\/][０-９\d]+',mes)
 
-        await client.send_message(user , send_ms+"のセッションの参加を取り消しました")
+            if str_list == []:
+                send_ms = '開催日時不明'
+            else:
+                send_ms = str_list[0]
 
-@client.event
-async def on_message(message):
-    com = message.content
+            await client.send_message(user , send_ms+"のセッションの参加を取り消しました")
 
-    ''' 一時的にオミット中。
-        if message.channel.id == ch_agenda:
-            if re.search('everyone', com):
-                await client.pin_message(message)
-                pin_ms = await client.pins_from(client.get_channel(ch_agenda))
-                send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
-                await client.send_message(discord.Object(id = ch_general), send_ms)
-    '''
-    if re.match('\$help', com):
-        help_ms ='''
-$[整数]d[整数] ダイスコードに従いダイスをふる
-$s[整数]d[整数] ダイスを降った後整列させ、期待値を表示する。
+    @client.event
+    async def on_message(message):
+        com = message.content
+
+        ''' 一時的にオミット中。
+            if message.channel.id == ch_agenda:
+                if re.search('everyone', com):
+                    await client.pin_message(message)
+                    pin_ms = await client.pins_from(client.get_channel(ch_agenda))
+                    send_ms ='現在の募集中セッションは'+str(len(pin_ms)-1)+'件だよ。参加してね。'
+                    await client.send_message(discord.Object(id = ch_general), send_ms)
         '''
-        await client.send_message(message.channel, help_ms)
+        if re.match('\$help', com):
+            help_ms =['$[整数]d[整数] ダイスコードに従いダイスをふる',
+            '$s[整数]d[整数] ダイスを降った後整列させ、期待値を表示する。',
+             "$sw_[整数] 種族の初期値を3回生成する",
+             "  人間：0,エルフ：1,ドワーフ：2,タビット：3",
+             "  ルーンフォーク：4,ナイトメア：5,リカント：6,",
+             "  リルドラケン：7,グラスランナー：8,メリア：9,"]
 
-    if re.match('\$\d+d\d+', com):
-        dice = []
-        dice_cmd_list = re.findall('\d+',com)
-        dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
+            await client.send_message(message.channel, '\n'.join(help_ms))
 
-        for s in range(0,dice_cmd_list[0]):
-            dice.append(random.randint(1,dice_cmd_list[1]))
+        if re.match('\$\d+d\d+', com):
+            dice = []
+            dice_cmd_list = re.findall('\d+',com)
+            dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
 
-        dice_num = map(str, dice)
-        dice_num = ','.join(dice_num)
-        dice_total = str(sum(dice))
+            for s in range(0,dice_cmd_list[0]):
+                dice.append(random.randint(1,dice_cmd_list[1]))
 
-        send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total
-        await client.send_message(message.channel, send_ms)
+            dice_num = map(str, dice)
+            dice_num = ','.join(dice_num)
+            dice_total = str(sum(dice))
 
-    if re.match('\$[sS]\d+d\d+', com):
-        dice = []
-        dice_cmd_list = re.findall('\d+',com)
-        dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
+            send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total
+            await client.send_message(message.channel, send_ms)
 
-        for s in range(0,dice_cmd_list[0]):
-            dice.append(random.randint(1,dice_cmd_list[1]))
-        dice.sort()
+        if re.match('\$[sS]\d+d\d+', com):
+            dice = []
+            dice_cmd_list = re.findall('\d+',com)
+            dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
 
-        dice_mean = str(((dice_cmd_list[1]+1))/2 *dice_cmd_list[0])
+            for s in range(0,dice_cmd_list[0]):
+                dice.append(random.randint(1,dice_cmd_list[1]))
+            dice.sort()
 
-        dice_num = map(str, dice)
-        dice_num = ','.join(dice_num)
-        dice_total = str(sum(dice))
+            dice_mean = str(((dice_cmd_list[1]+1))/2 *dice_cmd_list[0])
 
-        send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total + ' 期待値:' + dice_mean
-        await client.send_message(message.channel, send_ms)
+            dice_num = map(str, dice)
+            dice_num = ','.join(dice_num)
+            dice_total = str(sum(dice))
 
-#client.run("NDc4NTc2NTMyNzA5ODM0NzUz.DvY5iw.JpGGr9EunFqKx78TGymc7oHJOIA") #for test bot
-client.run("NDY2NjcxMTczMjIwOTU4MjE4.DxZ7Pg.r22zfpPlCjAzM5GaBarvrZjgz2w")
+            send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total + ' 期待値:' + dice_mean
+            await client.send_message(message.channel, send_ms)
+
+        if re.match('\$sw_\d+', com):
+            send_ms = Swstat.roll_stat_str(com)
+            await client.send_message(message.channel, send_ms)
+
+    #client.run("NDc4NTc2NTMyNzA5ODM0NzUz.DvY5iw.JpGGr9EunFqKx78TGymc7oHJOIA") #for test bot
+    client.run("NDY2NjcxMTczMjIwOTU4MjE4.DxZ7Pg.r22zfpPlCjAzM5GaBarvrZjgz2w")
