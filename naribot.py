@@ -3,6 +3,7 @@ import discord
 import re
 import random
 import swbot as SW
+import accesslog
 
 ch_agenda= '413611312464134144'
 ch_general= '263246089115664384'
@@ -11,6 +12,8 @@ ch_test= '523395238484508672'
 if __name__ == '__main__':
 
     swstat = SW.Swstat()
+    Alog = accesslog.accesslog()
+
     client = discord.Client()
 
     @client.event
@@ -52,6 +55,13 @@ if __name__ == '__main__':
                 send_ms = str_list[0]
 
             await client.send_message(user , send_ms+"のセッションの参加を取り消しました")
+
+    @client.event
+    async def on_voice_state_update(before, after):#memberを返す
+        Alog.add_member_list(after)
+        if( Alog.is_update_time() ):
+            send_ms = Alog.print_logs_str()
+            await client.send_message(discord.Object(id=ch_test), send_ms)
 
     @client.event
     async def on_message(message):
