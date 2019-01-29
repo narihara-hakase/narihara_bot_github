@@ -8,6 +8,7 @@ import accesslog
 ch_agenda= '413611312464134144'
 ch_general= '263246089115664384'
 ch_test= '523395238484508672'
+ch_bot= '468147038412865536'
 
 if __name__ == '__main__':
 
@@ -61,7 +62,7 @@ if __name__ == '__main__':
         Alog.add_member_list(after)
         if( Alog.is_update_time() ):
             send_ms = Alog.print_logs_str()
-            await client.send_message(discord.Object(id=ch_test), send_ms)
+            await client.send_message(discord.Object(id=ch_bot), send_ms)
 
     @client.event
     async def on_message(message):
