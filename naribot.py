@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
             await client.send_message(message.channel, '\n'.join(help_ms))
 
-        if re.match('\$\d+d\d+', com):
+        elif re.match('\$\d+d\d+', com):
             dice = []
             dice_cmd_list = re.findall('\d+',com)
             dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
@@ -101,7 +101,7 @@ if __name__ == '__main__':
             send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total
             await client.send_message(message.channel, send_ms)
 
-        if re.match('\$[sS]\d+d\d+', com):
+        elif re.match('\$[sS]\d+d\d+', com):
             dice = []
             dice_cmd_list = re.findall('\d+',com)
             dice_cmd_list = [int(dice_cmd_list[0]),int(dice_cmd_list[1])] #int化してます
@@ -119,8 +119,12 @@ if __name__ == '__main__':
             send_ms = 'ころころ...' + '[' + dice_num + '] 合計:'+ dice_total + ' 期待値:' + dice_mean
             await client.send_message(message.channel, send_ms)
 
-        if re.match('\$sw_\d+', com):
+        elif re.match('\$sw_\d+', com):
             send_ms = swstat.roll_stat_str(com)
+            await client.send_message(message.channel, send_ms)
+
+        elif re.match('\$logs', com):
+            send_ms = Alog.debug_print_str()
             await client.send_message(message.channel, send_ms)
 
     #client.run("NDc4NTc2NTMyNzA5ODM0NzUz.DvY5iw.JpGGr9EunFqKx78TGymc7oHJOIA") #for test bot

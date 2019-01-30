@@ -28,3 +28,10 @@ class accesslog:
 
             self.reset_val()
             return send_ms
+
+        def debug_print_str(self):
+            header = "本日のアクセス人数は[" + str( len(self.unique_member_list) ) + "]人でした。\r\n"
+            Stime = "サーバータイム:" +  str(datetime.datetime.today()) + "\r\n"
+            member_table = "\r\n".join(self.unique_member_list)
+            send_ms = Stime + header + member_table
+            return send_ms
