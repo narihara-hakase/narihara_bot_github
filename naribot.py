@@ -12,7 +12,7 @@ ch_bot= '468147038412865536'
 
 if __name__ == '__main__':
 
-    swstat = SW.Swstat()
+    sw = SW.Swstat()
     Alog = accesslog.accesslog()
 
     client = discord.Client()
@@ -80,6 +80,7 @@ if __name__ == '__main__':
             help_ms =['$[整数]d[整数] ダイスコードに従いダイスをふる',
             '$s[整数]d[整数] ダイスを降った後整列させ、期待値を表示する。',
             '$logs VCアクセスログおよびサーバータイムを表示する。',
+            "$sw_ab アビス強化表を振ります",
              "$sw_[整数] 種族の初期値を3回生成する",
              "  人間：0,エルフ：1,ドワーフ：2,タビット：3",
              "  ルーンフォーク：4,ナイトメア：5,リカント：6,",
@@ -121,7 +122,11 @@ if __name__ == '__main__':
             await client.send_message(message.channel, send_ms)
 
         elif re.match('\$sw_\d+', com):
-            send_ms = swstat.roll_stat_str(com)
+            send_ms = sw.roll_stat_str(com)
+            await client.send_message(message.channel, send_ms)
+
+        elif re.match('\$sw_ab', com):
+            send_ms = sw.roll_abyss_str()
             await client.send_message(message.channel, send_ms)
 
         elif re.match('\$logs', com):
