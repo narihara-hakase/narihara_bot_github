@@ -277,14 +277,23 @@ class Swstat:
         send_ms = header + a_name + timing + effect
         return send_ms
 
-    def roll_Career_str(self):
-        column = random.randint(0,107)
+    def roll_Career_str(self,com):
+
+        roll_try = list(map( int , re.findall('\d+',com) ))#コマンド入力ミスだった場合を保証
+        if roll_try == []:#数字を付けてなくても1回だけ動くように
+            roll_try.append(1)
+
+        roll = random.sample(range(108),roll_try[0])
+        career_data = []
+        for column in roll :
+            career = '**「' + self.__career_ary[column][2] + '」**'
+            footer = '(経歴表' + self.__career_ary[column][0] + ' ダイス目[' + self.__career_ary[column][1] + '] )\r\n'
+            career_data.append(career + footer)
 
         header = 'あなたの経歴は…\r\n'
-        career_str = '「' + self.__career_ary[column][2] + '」\r\n'
-        footer = '(経歴表' + self.__career_ary[column][0] + ' ダイス目[' + self.__career_ary[column][1] + '] )'
+        career_body = ''.join(career_data)
 
-        send_ms = header + career_str + footer
+        send_ms = header + career_body
         return send_ms
 
     def roll_reason_str(self):

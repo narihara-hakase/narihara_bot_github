@@ -77,17 +77,19 @@ if __name__ == '__main__':
                     await client.send_message(discord.Object(id = ch_general), send_ms)
         '''
         if re.match('\$help', com):
-            help_ms =['$[整数]d[整数] ダイスコードに従いダイスをふる',
+            help_ms =['``` ',
+            '$[整数]d[整数] ダイスコードに従いダイスをふる',
             '$s[整数]d[整数] ダイスを降った後整列させ、期待値を表示する。',
             '$logs VCアクセスログおよびサーバータイムを表示する。',
             "$sw_ab アビス強化表を振ります",
-            '$sw_ca 経歴表を振ります',
+            '$sw_ca[無しor整数] 整数の数だけ経歴表を振ります',
             '$sw_re 冒険に出た理由表を振ります',
              "$sw_[整数] 種族の初期値を3回生成する",
              "  人間：0,エルフ：1,ドワーフ：2,タビット：3",
              "  ルーンフォーク：4,ナイトメア：5,リカント：6,",
              "  リルドラケン：7,グラスランナー：8,メリア：9,",
-             "　ティエンス：10,レプラカーン：11"]
+             "　ティエンス：10,レプラカーン：11",
+             '``` ']
 
             await client.send_message(message.channel, '\n'.join(help_ms))
 
@@ -132,8 +134,8 @@ if __name__ == '__main__':
             send_ms = sw.roll_abyss_str()
             await client.send_message(message.channel, send_ms)
 
-        elif re.match('\$sw_ca', com):
-            send_ms = sw.roll_Career_str()
+        elif re.match('\$sw_ca\d*', com):
+            send_ms = sw.roll_Career_str(com)
             await client.send_message(message.channel, send_ms)
 
         elif re.match('\$sw_re', com):
