@@ -229,7 +229,7 @@ class Swstat:
     ]
 
     def roll_stat_str(self,com):
-        race_cmd = re.findall('[0-9]|[1-9][0-9]',com)
+        race_cmd = re.findall('\d+',com)
         race_num = int(race_cmd[0])
         #配列[race_num][0]処理
         if  race_num < len(self.__RACE_STAT):
